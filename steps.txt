@@ -1,0 +1,16 @@
+1- Crie uma máquina virtual com o sistema operacional de sua escolha (por exemplo, Ubuntu 18.04).
+2- Instale o Docker e o Docker Compose na máquina virtual.
+3- Crie uma pasta para o projeto e dentro dela crie uma pasta chamada "srcs".
+4- Dentro da pasta "srcs", crie uma pasta para cada serviço: "nginx", "wordpress", e "mariadb".
+5- Crie um arquivo Dockerfile em cada pasta, com o nome exatamente igual ao nome da pasta correspondente.
+6- No arquivo Dockerfile do serviço NGINX, configure o servidor NGINX com as opções de TLSv1.2 ou TLSv1.3.
+7- No arquivo Dockerfile do serviço WordPress, instale e configure o WordPress e php-fpm.
+8- No arquivo Dockerfile do serviço MariaDB, instale e configure o MariaDB.
+9- Crie um arquivo docker-compose.yml na pasta raiz do projeto.
+10- No arquivo docker-compose.yml, crie um serviço para cada contêiner (NGINX, WordPress, MariaDB), referenciando os Dockerfiles correspondentes.
+11- Configure os volumes e a rede Docker necessários no arquivo docker-compose.yml.
+12- Crie um arquivo Makefile na pasta raiz do projeto e configure-o para chamar os Dockerfiles e o docker-compose.yml necessários.
+13- Configure as variáveis de ambiente necessárias no arquivo docker-compose.yml e crie um arquivo .env na pasta srcs para armazená-las.
+14- Configure o nome de domínio para apontar para o endereço IP local da máquina virtual, conforme especificado no projeto.
+15- Construa e execute o projeto usando o comando "docker-compose up". Certifique-se de que os contêineres sejam reiniciados em caso de falha.
+Lembre-se de seguir todas as regras especificadas no projeto, como não utilizar "hacky patches", não usar comandos de loop infinito, não ter senhas presentes nos Dockerfiles, e usar variáveis de ambiente. Também é importante construir os contêineres a partir da penúltima versão estável do Alpine ou Debian e não usar imagens Docker prontas (exceto para o Alpine/Debian).
