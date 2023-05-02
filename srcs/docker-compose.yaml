@@ -1,12 +1,63 @@
-version: '3.9'
+version: '3.7'
+
 services:
-  ruben:
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+    image: mariadb
+    env_file:
+      - .env
+    volumes:
+      - mysql_vol:/var/lib/mysql
+    networks:
+      - inception_network
+    restart: on-failure
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    volumes:
+      - wordpress_vol:/var/www/wordpress
+    networks:
+      - inception_network
+    restart: on-failure
+
+  nginx:
+    build:
+      context: ./requirements/nginx
     image: nginx
+    volumes:
+      - wordpress_vol:/var/www/wordpress
     ports:
       - "80:80"
-  ruben2:
-    image: nginx
-    ports:
-      - "81:80"
+    depends_on:
+      - mariadb
+    networks:
+      - inception_network
+    restart: on-failure
 
+volumes:
+  mysql_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/rteles/data/mysql
+      o: bind
+    name: mysql_vol
   
+  wordpress_vol:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/rteles/data/wordpress
+      o: bind
+    name: wordpress_vol
+
+networks:
+  inception_network:

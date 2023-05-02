@@ -1,0 +1,36 @@
+# versao 10
+FROM debian:buster
+
+# Atualize o sistema e instale os pacotes necessários
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    unzip \
+    mariadb-client \
+    php \
+    php-curl \
+    php-gd \
+    php-mbstring \
+    php-xml \
+    php-zip \
+    php-mysql \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crie o diretório de trabalho para o WordPress
+WORKDIR /var/www/html
+
+# Baixe a última versão do WordPress
+RUN curl -O https://wordpress.org/latest.tar.gz && \
+    tar -xzf latest.tar.gz --strip-components=1 && \
+    rm latest.tar.gz
+
+# Defina as permissões corretas nos arquivos do WordPress
+RUN chown -R www-data:www-data /var/www/html
+
+# Exponha a porta 80 do contêiner
+EXPOSE 80
+
+# Defina o ponto de entrada como o servidor Apache
+#CMD ["apache2-foreground"]
+ENTRYPOINT ["sh", "-c", "tail -f /dev/null"]

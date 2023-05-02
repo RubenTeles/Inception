@@ -1,0 +1,1 @@
+# service mysql start --bind=0.0.0.0
